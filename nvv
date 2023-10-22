@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# [layout]
+# |-- nvv <-- rename it to whatever you want & create a symlink to /usr/bin
+# `-- nvim
+#     |-- init.lua
+#     `-- lua
+#         |-- plugins
+#         |   |-- ...
+#         |   |-- init.lua
+#         |   `-- ...
+#         |-- customs
+#         ...
+#
+
+NVIM_PROFILE_NAME=""
+NVIM_INIT_FILE="init.lua"
+NVIM_COMMAND="nvim"
+
+
+SCRIPT_DIR="$(dirname "$0")"
+# check if a symlink created by ln -s
+if [ -h "$0" ]; then
+    # it a symlink, follow the link
+    SCRIPT_DIR="$(dirname "$(readlink $0)")"
+fi
+
+
+exec env XDG_CONFIG_HOME="${SCRIPT_DIR}" \
+         XDG_CACHE_HOME="${SCRIPT_DIR}/.cache" \
+         XDG_DATA_HOME="${SCRIPT_DIR}/.local/share" \
+         XDG_STATE_HOME="${SCRIPT_DIR}/.local/state" \
+         ${NVIM_COMMAND} "$@"
+
