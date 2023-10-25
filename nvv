@@ -2,15 +2,10 @@
 
 # [layout]
 # |-- nvv <-- rename it to whatever you want & create a symlink to /usr/bin
-# `-- nvim
+# `-- nvim/
 #     |-- init.lua
-#     `-- lua
-#         |-- plugins
-#         |   |-- ...
-#         |   |-- init.lua
-#         |   `-- ...
-#         |-- customs
-#         ...
+#     `-- lua/
+#     |-- ...
 #
 
 NVIM_PROFILE_NAME=""
