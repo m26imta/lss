@@ -1,3 +1,7 @@
-/.cache/
-/.local/
+/*
+/*/
+!/nvim/
+!/.gitignore
+!/nvv
+*/lazy-lock.json
 
