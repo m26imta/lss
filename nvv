@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # [layout]
 # |-- nvv <-- rename it to whatever you want & create a symlink to /usr/bin
@@ -20,10 +20,11 @@ if [ -h "$0" ]; then
     SCRIPT_DIR="$(dirname "$(readlink $0)")"
 fi
 
+ENV="XDG_CONFIG_HOME=$SCRIPT_DIR "
+ENV+="XDG_CACHE_HOME=$SCRIPT_DIR/.cache "
+ENV+="XDG_STATE_HOME=$SCRIPT_DIR/.local/state "
+# ENV+="XDG_DATA_HOME='${SCRIPT_DIR}/.local/share' "
+ENV+="XDG_DATA_HOME=$HOME/.local/share "
 
-exec env XDG_CONFIG_HOME="${SCRIPT_DIR}" \
-         XDG_CACHE_HOME="${SCRIPT_DIR}/.cache" \
-         XDG_DATA_HOME="${SCRIPT_DIR}/.local/share" \
-         XDG_STATE_HOME="${SCRIPT_DIR}/.local/state" \
-         ${NVIM_COMMAND} "$@"
+exec env $ENV $NVIM_COMMAND "$@"
 
