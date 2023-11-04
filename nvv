@@ -13,12 +13,7 @@ NVIM_INIT_FILE="init.lua"
 NVIM_COMMAND="nvim"
 
 
-SCRIPT_DIR="$(dirname "$0")"
-# check if a symlink created by ln -s
-if [ -h "$0" ]; then
-    # it a symlink, follow the link
-    SCRIPT_DIR="$(dirname "$(readlink $0)")"
-fi
+SCRIPT_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 ENV="XDG_CONFIG_HOME=$SCRIPT_DIR "
 ENV+="XDG_CACHE_HOME=$SCRIPT_DIR/.cache "
