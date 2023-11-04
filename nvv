@@ -8,18 +8,31 @@
 #     |-- ...
 #
 
-NVIM_PROFILE_NAME=""
-NVIM_INIT_FILE="init.lua"
+# if DATA_HOME_DEFAULT=1, use default $HOME/.local/share OR !=1 use $SCRIPT_DIR/.local/share
+DATA_HOME_DEFAULT=0
+# neovim or neovide will work fine
 NVIM_COMMAND="nvim"
 
-
-SCRIPT_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+cwd=$(pwd)
+# get absolute path instead of relative path
+path="$( cd "$(dirname "$0")" 2>&1 >/dev/null ; pwd -P )/$(basename "$0")"
+cd "$(dirname $path)"
+# let check the path is a symlink or not
+if [[ -h "$path" ]]; then
+    # it a symlink, follow the link
+    path="$(readlink $path)"
+    # the path that we got from readlink can probably still relative
+    path="$( cd "$(dirname "$path")" 2>&1 >/dev/null ; pwd -P )/$(basename "$path")"
+    cd "$(dirname $path)"
+fi
+SCRIPT_DIR="$(dirname $path)"
 
 ENV="XDG_CONFIG_HOME=$SCRIPT_DIR "
 ENV+="XDG_CACHE_HOME=$SCRIPT_DIR/.cache "
 ENV+="XDG_STATE_HOME=$SCRIPT_DIR/.local/state "
-# ENV+="XDG_DATA_HOME='${SCRIPT_DIR}/.local/share' "
-ENV+="XDG_DATA_HOME=$HOME/.local/share "
+[[ DATA_HOME_DEFAULT -eq 1 ]] && ENV+="XDG_DATA_HOME=$HOME/.local/share " || ENV+="XDG_DATA_HOME=$SCRIPT_DIR/.local/share"
 
+#
+cd $cwd
 exec env $ENV $NVIM_COMMAND "$@"
 
