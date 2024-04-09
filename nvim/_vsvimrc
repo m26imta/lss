@@ -1,0 +1,56 @@
+"" _vsvimrc
+"" vsvim for Visual Studio
+"" C:\Users\Admin\_vsvimrc
+"" https://github.com/VsVim/VsVim
+"" Enable <C-D> <C-U> <C-R> <C-F> in VsVim settings
+
+let g:isvsvim = 1
+" source ~/_vimrc
+
+"" Global Settings
+nnoremap ; :
+inoremap jk <ESC>
+
+set clipboard=unnamed
+set ignorecase
+set hlsearch
+set incsearch
+set smartcase
+set timeoutlen=400
+
+"" Local Settings
+set autoindent
+set expandtab
+set number
+set relativenumber
+set shiftwidth=4
+set tabstop=4
+
+nnoremap <ESC> :nohl<CR>
+
+"" Indent
+map <S-j> :vsc Edit.MoveSelectedLinesDown<CR>
+map <S-k> :vsc Edit.MoveSelectedLinesUp<CR>
+map <S-l> :vsc Edit.IncreaseLineIndent<CR>
+map <S-h> :vsc Edit.DecreaseLineIndent<CR>
+
+" Yank & Paste
+inoremap <C-r><C-r> <C-o>"+P
+
+" Search & Replace
+map <C-f> :vsc Edit.Find<CR>
+vnoremap <C-f> y<ESC>/<C-r>"<CR>
+vnoremap <C-r> "hy:%s/<C-r>h//gc<LEFT><LEFT><LEFT>
+
+" Increment & Decrement number
+nnoremap - <C-x>
+nnoremap = <C-a>
+
+
+" https://github.com/VsVim/VsVim/wiki/VsVim-Nonstandard-Behavior
+" set 'selection', 'selectmode', 'mousemodel' and 'keymodel' for MS-Windows
+""behave mswin
+
+" backspace and cursor keys wrap to previous/next line
+set backspace=indent,eol,start whichwrap+=<,>,[,]
+
